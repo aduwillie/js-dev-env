@@ -1,0 +1,59 @@
+{
+  "name": "javascript-starter-kit",
+  "version": "1.0.0",
+  "description": "JavaScript Development Environment",
+  "main": "index.js",
+  "scripts": {
+    "security-check": "nsp check",
+    "localtunnel": "lt --port 3000",
+    "share": "npm-run-all --parallel start:server localtunnel",
+    "prestart": "babel-node ./build-scripts/start-message.js",
+    "start": "npm-run-all  --parallel  security-check start:server lint:watch",
+    "start:server": "babel-node ./build-scripts/src-server.js",
+    "lint": "esw webpack.config.* src build-scripts --color",
+    "lint:watch": "npm run lint -- --watch",
+    "test": "mocha --reporter progress ./build-scripts/test-setup.js \"src/**/*.spec.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aduwillie/js-dev-env.git"
+  },
+  "keywords": [],
+  "author": "Adu Williams",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aduwillie/js-dev-env/issues"
+  },
+  "homepage": "https://github.com/aduwillie/js-dev-env#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-latest": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "chalk": "^2.1.0",
+    "cheerio": "^1.0.0-rc.2",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "eslint": "^4.6.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-watch": "^3.1.2",
+    "express": "^4.15.4",
+    "html-webpack-plugin": "^2.30.1",
+    "jsdom": "^11.2.0",
+    "localtunnel": "^1.8.3",
+    "mocha": "^3.5.2",
+    "mock": "^0.1.1",
+    "npm-run-all": "^4.1.1",
+    "nsp": "^2.8.0",
+    "numeral": "^2.0.6",
+    "open": "0.0.5",
+    "rimraf": "^2.6.1",
+    "style-loader": "^0.18.2",
+    "webpack": "^3.5.6",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.19.1",
+    "webpack-md5-hash": "0.0.5"
+  }
+}
