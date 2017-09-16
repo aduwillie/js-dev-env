@@ -8,11 +8,12 @@
     "localtunnel": "lt --port 3000",
     "share": "npm-run-all --parallel start:server localtunnel",
     "prestart": "babel-node ./build-scripts/start-message.js",
-    "start": "npm-run-all  --parallel  security-check start:server lint:watch",
+    "start": "npm-run-all  --parallel  security-check start:server lint:watch test:watch",
     "start:server": "babel-node ./build-scripts/src-server.js",
     "lint": "esw webpack.config.* src build-scripts --color",
     "lint:watch": "npm run lint -- --watch",
-    "test": "mocha --reporter progress ./build-scripts/test-setup.js \"src/**/*.spec.js\""
+    "test": "mocha --reporter progress ./build-scripts/test-setup.js \"src/**/*.spec.js\"",
+    "test:watch": "npm run test -- --watch"
   },
   "repository": {
     "type": "git",
