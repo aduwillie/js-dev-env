@@ -12,7 +12,7 @@
     "start:server": "babel-node ./build-scripts/src-server.js",
     "lint": "esw webpack.config.* src build-scripts --color",
     "lint:watch": "npm run lint -- --watch",
-    "test": "./bin/mocha --reporter progress ./build-scripts/test-setup.js \"src/**/*.spec.js\"",
+    "test": "./node_modules/.bin/mocha --reporter progress ./build-scripts/test-setup.js \"src/**/*.spec.js\"",
     "test:watch": "npm run test -- --watch"
   },
   "repository": {
