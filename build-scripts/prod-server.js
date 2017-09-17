@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import open from 'open';
 import compression from 'compression';
+import cors from 'cors';
 
 import userApi from '../src/routes/user'
 
@@ -10,6 +11,7 @@ import userApi from '../src/routes/user'
 const port = 3000;
 const app = express();
 
+app.use(cors());
 app.use(compression());
 app.use(express.static('dist'));
 
