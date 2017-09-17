@@ -6,14 +6,22 @@
   "scripts": {
     "security-check": "nsp check",
     "localtunnel": "lt --port 3000",
-    "share": "npm-run-all --parallel start:server localtunnel",
+    "share:dev": "npm-run-all --parallel start:dev localtunnel",
+    "share:prod": "npm-run-all --parallel start:server localtunnel",
+    "start:dev": "NODE_ENV=development npm-run-all  --parallel  security-check start lint:watch test:watch start-mock-api",
     "prestart": "babel-node ./build-scripts/start-message.js",
-    "start": "npm-run-all  --parallel  security-check start:server lint:watch test:watch",
-    "start:server": "babel-node ./build-scripts/src-server.js",
+    "start": "babel-node ./build-scripts/dev-server.js",
+    "start:prod": "NODE_ENV=production npm run build && babel-node ./build-scripts/prod-server",
     "lint": "esw webpack.config.* src build-scripts --color",
     "lint:watch": "npm run lint -- --watch",
-    "test": "./node_modules/.bin/mocha --reporter progress ./build-scripts/test-setup.js \"src/**/*.spec.js\"",
-    "test:watch": "npm run test -- --watch"
+    "test": "mocha --reporter progress ./build-scripts/test-setup.js \"src/**/*.spec.js\"",
+    "test:watch": "npm run test -- --watch",
+    "generate-mock-data": " babel-node ./build-scripts/generate-mock-data",
+    "prestart-mock-api": "npm run generate-mock-data",
+    "start-mock-api": "json-server --watch ./src/api/db.json --port 3001",
+    "clean": "rimraf ./dist ./src/api/db.json && mkdir dist",
+    "prebuild": "npm-run-all security-check clean test lint",
+    "build": "babel-node ./build-scripts/build"
   },
   "repository": {
     "type": "git",
@@ -35,14 +43,18 @@
     "chai": "^4.1.2",
     "chalk": "^2.1.0",
     "cheerio": "^1.0.0-rc.2",
+    "compression": "^1.7.0",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
     "eslint": "^4.6.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-watch": "^3.1.2",
     "express": "^4.15.4",
+    "extract-text-webpack-plugin": "^3.0.0",
     "html-webpack-plugin": "^2.30.1",
     "jsdom": "^11.2.0",
+    "json-schema-faker": "^0.5.0-rc11",
+    "json-server": "^0.12.0",
     "localtunnel": "^1.8.3",
     "mocha": "^3.5.2",
     "mock": "^0.1.1",
@@ -56,5 +68,8 @@
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.19.1",
     "webpack-md5-hash": "0.0.5"
+  },
+  "dependencies": {
+    "whatwg-fetch": "^2.0.3"
   }
 }
